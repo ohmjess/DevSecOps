@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile.sonarqube
     container_name: sonarqube
     ports:
-      - "9000:9000"
+      - "3001:9000"
     environment:
       - SONAR_JDBC_URL=jdbc:postgresql://db:5432/sonar
       - SONAR_JDBC_USERNAME=user
