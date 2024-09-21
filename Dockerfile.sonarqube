@@ -1,0 +1,6 @@
+FROM sonarqube:lts
+
+ENV SONAR_JDBC_URL=jdbc:postgresql://db:5432/sonar \
+    SONAR_JDBC_USERNAME=user \
+    SONAR_JDBC_PASSWORD=password
+
