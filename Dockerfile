@@ -15,5 +15,4 @@ COPY --from=build /usr/src/app /usr/src/app
 # Install production dependencies only
 RUN npm install --production
 
-EXPOSE 3000
 CMD ["node", "app.js"]
