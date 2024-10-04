@@ -64,24 +64,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
+                // Build Docker image ใหม่โดยทับตัวเดิม
                 sh "docker build -t ${DOCKER_IMAGE}:${params.DOCKER_TAG} ."
                 echo "Docker image built: ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
-            }
-        }
-
-        stage('Stop Existing Container') {
-            steps {
-                script {
-                    echo 'Stopping any existing container using the port...'
-                    def containerId = sh(script: "docker ps --filter 'publish=${APP_PORT}' --format '{{.ID}}'", returnStdout: true).trim()
-                    if (containerId) {
-                        echo "Stopping container with ID: ${containerId}"
-                        sh "docker stop ${containerId}"
-                        sh "docker rm ${containerId}"
-                    } else {
-                        echo "No running container found on port ${APP_PORT}"
-                    }
-                }
             }
         }
 
@@ -89,7 +74,8 @@ pipeline {
             steps {
                 echo 'Deploying the new container...'
                 script {
-                    sh 'docker-compose up -d'
+                    // Deploy container ใหม่จาก image ที่ถูก build
+                    sh "docker run -d --name ${APP_NAME} -p ${APP_PORT}:3000 ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
                 }
             }
         }
@@ -104,8 +90,6 @@ pipeline {
         }
         cleanup {
             echo 'Cleaning up...'
-            sh 'docker-compose down'
-            sh "docker rmi ${DOCKER_IMAGE}:${params.DOCKER_TAG} || true"
         }
     }
 }
