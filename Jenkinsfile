@@ -50,13 +50,13 @@ pipeline {
         stage('Scan') {
             steps {
                 withSonarQubeEnv(installationName: 'sq1') {
-                    sh "npm install sonar-scanner"
-                    def sonarToken = credentials('jenkin-sonaqube')
-                    sh "npx sonar-scanner -Dsonar.projectKey=mywebapp -Dsonar.login=${sonarToken}"
+                    withCredentials([string(credentialsId: 'jenkin-sonaqube', variable: 'SONAR_TOKEN')]) {
+                        sh "npm install sonar-scanner"
+                        sh "npx sonar-scanner -Dsonar.projectKey=mywebapp -Dsonar.login=${SONAR_TOKEN}"
+                    }
                 }
             }
         }
-
 
         stage('Build Docker Image') {
             steps {
