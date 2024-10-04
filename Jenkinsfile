@@ -47,6 +47,15 @@ pipeline {
             }
         }
 
+        stage('Scan') {
+            steps {
+                withSonarQubeEnv(installationName: 'sq1') {
+                    bat "npm install sonar-scanner"
+                    bat 'npx sonar-scanner -X -X -Dsonar.projectKey=mywebapp'
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
