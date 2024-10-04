@@ -67,18 +67,11 @@ pipeline {
                 // Build Docker image ใหม่โดยทับตัวเดิม
                 sh "docker build -t ${DOCKER_IMAGE}:${params.DOCKER_TAG} ."
                 echo "Docker image built: ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
+                sh "docker-compose up -d"
+                echo "docker-compose up ..."
             }
         }
 
-        stage('Deploy New Container') {
-            steps {
-                echo 'Deploying the new container...'
-                script {
-                    // Deploy container ใหม่จาก image ที่ถูก build
-                    sh "docker run -d --name ${APP_NAME} -p ${APP_PORT}:3000 ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
-                }
-            }
-        }
     }
 
     post {
