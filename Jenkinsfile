@@ -54,7 +54,7 @@ pipeline {
                         npm install sonar-scanner
                         npx sonar-scanner \
                         -Dsonar.projectKey=mywebapp \
-                        -Dsonar.host.url=http://localhost:3001 \
+                        -Dsonar.host.url=http://sonarqube:9000 \
                         -Dsonar.login=$SONAR_TOKEN
                     '''
                 }
