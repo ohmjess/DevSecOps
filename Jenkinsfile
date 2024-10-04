@@ -49,11 +49,14 @@ pipeline {
 
         stage('Scan') {
             steps {
-                withSonarQubeEnv(installationName: 'sq1') {
-                    withCredentials([string(credentialsId: 'jenkin-sonaqube', variable: 'SONAR_TOKEN')]) {
-                        sh "npm install sonar-scanner"
-                        sh "npx sonar-scanner -Dsonar.projectKey=mywebapp -Dsonar.login=${SONAR_TOKEN}"
-                    }
+                withCredentials([string(credentialsId: 'jenkin-sonaqube', variable: 'SONAR_TOKEN')]) {
+                    sh '''
+                        npm install sonar-scanner
+                        npx sonar-scanner \
+                        -Dsonar.projectKey=mywebapp \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.login=$SONAR_TOKEN
+                    '''
                 }
             }
         }
