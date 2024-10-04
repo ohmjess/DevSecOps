@@ -51,7 +51,8 @@ pipeline {
             steps {
                 withSonarQubeEnv(installationName: 'sq1') {
                     sh "npm install sonar-scanner"
-                    sh 'npx sonar-scanner -X -Dsonar.projectKey=mywebapp -Dsonar.host.url=http://sonarqube:9000'
+                    def sonarToken = credentials('jenkin-sonaqube')
+                    sh "npx sonar-scanner -Dsonar.projectKey=mywebapp -Dsonar.login=${sonarToken}"
                 }
             }
         }
