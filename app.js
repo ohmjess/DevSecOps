@@ -12,7 +12,7 @@ app.use(express.static("public"));
 app.get("/", (req, res) => {
   // Unused variable
   const unusedVar = "This variable is not used anywhere";
-  res.status(200).send("bom gay gay gay");
+  res.status(200).send(unusedVar);
 });
 
 app.get("/about", (req, res) => {
