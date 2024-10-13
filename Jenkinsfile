@@ -73,7 +73,7 @@ pipeline {
             steps {
                 echo 'Deploying the application...'
                 // ตัวอย่างการนำไปใช้โดยใช้ Docker
-                sh "docker run -d -p ${APP_PORT}:3201 ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
+                sh "docker run -d -p ${APP_PORT}:3000 ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
             }
         }
     }
