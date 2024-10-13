@@ -18,7 +18,17 @@ pipeline {
             steps {
                 script {
                     cleanWs()
-                    git branch: "${params.BRANCH_NAME}", url: 'https://github.com/your-repo/your-project'
+                    git branch: "${params.BRANCH_NAME}", url: 'https://github.com/boytur/DevSecOps'
+                }
+            }
+        }
+
+         stage('Verify Branch') {
+            steps {
+                script {
+                    if ("${params.BRANCH_NAME}" != "main") {
+                        error("This pipeline only runs on the main branch. Current branch: ${params.BRANCH_NAME}")
+                    }
                 }
             }
         }
