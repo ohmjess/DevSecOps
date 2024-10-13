@@ -19,6 +19,7 @@ pipeline {
                 script {
                     cleanWs()
                     git branch: "${params.BRANCH_NAME}", url: 'https://github.com/boytur/DevSecOps'
+                    git pull origin "${params.BRANCH_NAME}"
                 }
             }
         }
@@ -66,6 +67,14 @@ pipeline {
                 echo 'Building Docker image...'
                 sh "docker build -t ${DOCKER_IMAGE}:${params.DOCKER_TAG} ."
                 echo "Docker image built: ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
+            }
+        }
+
+        stage('Clear Container') {
+            steps
+            {
+                sh "docker ps -q --filter publish=${APP_PORT} | xargs docker stop"
+                sh "docker ps -q --filter publish=${APP_PORT} | xargs docker rm"
             }
         }
 
