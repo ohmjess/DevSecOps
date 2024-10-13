@@ -19,18 +19,25 @@ pipeline {
                 script {
                     cleanWs()
                     git branch: "${params.BRANCH_NAME}", url: 'https://github.com/boytur/DevSecOps'
-                    git pull
                 }
             }
         }
 
-         stage('Verify Branch') {
+        stage('Verify Branch') {
             steps {
                 script {
                     if ("${params.BRANCH_NAME}" != "main") {
                         error("This pipeline only runs on the main branch. Current branch: ${params.BRANCH_NAME}")
                     }
                 }
+            }
+        }
+
+        stage('Pulling Project')
+        {
+            steps {
+                echo 'Pulling the project...'
+                sh "git pull origin ${params.BRANCH_NAME}"
             }
         }
 
