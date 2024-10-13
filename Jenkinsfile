@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     cleanWs()
-                    git branch: "${params.BRANCH_NAME}", url: 'https://github.com/boytur/DevSecOps'
+                    git branch: "${params.BRANCH_NAME}", url: 'https://github.com/ohmjess/DevSecOps'
                 }
             }
         }
