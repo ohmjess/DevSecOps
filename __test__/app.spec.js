@@ -6,7 +6,7 @@ describe('GET /', () => {
     it('responds with status 200 and returns the expected message', async () => {
         const response = await request(app).get('/');
         expect(response.status).toBe(200);
-        expect(response.text).toBe('bom gay'); // ปรับให้ตรงกับข้อความที่ตอบกลับ
+        expect(response.text).toBe('This variable is not used anywhere'); // ปรับให้ตรงกับข้อความที่ตอบกลับ
     });
 });
 
