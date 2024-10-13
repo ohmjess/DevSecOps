@@ -100,6 +100,7 @@ pipeline {
             }
         }
 
+
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
