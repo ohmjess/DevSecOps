@@ -19,7 +19,7 @@ pipeline {
                 script {
                     cleanWs()
                     git branch: "${params.BRANCH_NAME}", url: 'https://github.com/boytur/DevSecOps'
-                    git pull origin "${params.BRANCH_NAME}"
+                    // git pull origin "${params.BRANCH_NAME}"
                 }
             }
         }
