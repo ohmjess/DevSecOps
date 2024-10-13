@@ -69,6 +69,14 @@ pipeline {
             }
         }
 
+        stage('Clear Image')
+        {
+            steps {
+                echo 'Clearing Docker image...'
+                sh "docker rmi -f ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
