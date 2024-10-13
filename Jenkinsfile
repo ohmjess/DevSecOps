@@ -68,8 +68,6 @@ pipeline {
                 // Build Docker image ใหม่โดยทับตัวเดิม
                 sh "docker build -t ${DOCKER_IMAGE}:${params.DOCKER_TAG} ."
                 echo "Docker image built: ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
-                // หยุดและลบคอนเทนเนอร์เก่าก่อน
-                sh "docker-compose down"
                 sh "docker-compose up -d"
                 echo "docker-compose up ..."
             }
