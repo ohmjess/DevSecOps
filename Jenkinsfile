@@ -71,10 +71,17 @@ pipeline {
         }
 
         stage('Clear Container') {
-            steps
-            {
-                sh "docker ps -q --filter publish=${APP_PORT} | xargs docker stop"
-                sh "docker ps -q --filter publish=${APP_PORT} | xargs docker rm"
+            steps {
+                script {
+                    def containers = sh(script: "docker ps -q --filter publish=${APP_PORT}", returnStdout: true).trim()
+                    if (containers) {
+                        echo "Stopping and removing containers using port ${APP_PORT}..."
+                        sh "echo ${containers} | xargs docker stop"
+                        sh "echo ${containers} | xargs docker rm"
+                    } else {
+                        echo "No containers are using port ${APP_PORT}."
+                    }
+                }
             }
         }
 
