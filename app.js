@@ -11,7 +11,7 @@ app.use(express.static("public"));
 // Define routes
 app.get("/", (req, res) => {
   // Unused variable
-  const unusedVar = "This variable is not used anywhere";
+  const unusedVar = "Hello I am senior devsecops engineer";
   res.status(200).send(unusedVar);
 });
 
