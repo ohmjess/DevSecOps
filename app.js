@@ -23,6 +23,7 @@ app.get("/about", (req, res) => {
 
 // Function with no purpose
 function uselessFunction() {
+  var text = "bom gay";
   // This function does nothing but takes up space
 }
 
