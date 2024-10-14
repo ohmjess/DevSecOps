@@ -6,7 +6,7 @@ pipeline {
         DOCKER_IMAGE = 'your-docker-image'
         APP_PORT = '3201'
         APP_NAME = 'your-app-name'
-        GIT_URL = 'https://github.com/ohmjess/DevSecOps'
+        GIT_URL = 'https://github.com/BSO-Space/DevSecOps'
     }
 
     parameters {
@@ -103,7 +103,7 @@ pipeline {
 
 
 
-        
+
 
         stage('Deploy') {
             steps {
