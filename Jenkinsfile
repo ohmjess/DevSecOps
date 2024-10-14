@@ -62,7 +62,7 @@ pipeline {
 
         stage('Scan') {
             steps {
-                withCredentials([string(credentialsId: 'jenkin-sonaqube', variable: 'SONAR_TOKEN')]) {
+                withCredentials([string(credentialsId: 'test-sonar', variable: 'SONAR_TOKEN')]) {
                     sh '''
                         npm install sonar-scanner
                         npx sonar-scanner \
