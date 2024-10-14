@@ -6,7 +6,7 @@ describe('GET /', () => {
     it('responds with status 200 and returns the expected message', async () => {
         const response = await request(app).get('/');
         expect(response.status).toBe(200);
-        expect(response.text).toBe('Hello I am senior devsecops engineer'); // ปรับให้ตรงกับข้อความที่ตอบกลับ
+        expect(response.text).toBe('Hello I am senior DevSecOps engineer'); // ปรับให้ตรงกับข้อความที่ตอบกลับ
     });
 });
 
@@ -14,6 +14,6 @@ describe('GET /about', () => {
     it('responds with status 200 and renders the about page', async () => {
         const response = await request(app).get('/about');
         expect(response.status).toBe(200);
-        expect(response.text).toContain('about gay'); // เปลี่ยนข้อความให้ตรงกับเนื้อหาใน about.html
+        expect(response.text).toContain('about page'); // เปลี่ยนข้อความให้ตรงกับเนื้อหาใน about.html
     });
 });

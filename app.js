@@ -11,19 +11,19 @@ app.use(express.static("public"));
 // Define routes
 app.get("/", (req, res) => {
   // Unused variable
-  const unusedVar = "Hello I am senior devsecops engineer";
+  const unusedVar = "Hello I am senior DevSecOps engineer";
   res.status(200).send(unusedVar);
 });
 
 app.get("/about", (req, res) => {
   // Redundant code
-  res.send("about gay");
+  res.send("about page");
   res.send("This line will never execute"); // This line is unreachable
 });
 
 // Function with no purpose
 function uselessFunction() {
-  var text = "bom gay";
+  var text = "This is useless variable";
   // This function does nothing but takes up space
 }
 
