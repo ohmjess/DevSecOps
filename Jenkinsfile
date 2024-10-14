@@ -6,6 +6,7 @@ pipeline {
         DOCKER_IMAGE = 'your-docker-image'
         APP_PORT = '3201'
         APP_NAME = 'your-app-name'
+        GIT_URL = 'https://github.com/ohmjess/DevSecOps'
     }
 
     parameters {
@@ -18,7 +19,7 @@ pipeline {
             steps {
                 script {
                     cleanWs()
-                    git branch: "${params.BRANCH_NAME}", url: 'https://github.com/ohmjess/DevSecOps'
+                    git branch: "${params.BRANCH_NAME}", url: "${GIT_URL}"
                 }
             }
         }
@@ -69,43 +70,43 @@ pipeline {
             }
         }
 
-        stage('Clear Image')
-        {
-            steps {
-                echo 'Clearing Docker image...'
-                sh "docker rmi -f ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
-            }
-        }
+        // stage('Clear Image')
+        // {
+        //     steps {
+        //         echo 'Clearing Docker image...'
+        //         sh "docker rmi -f ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
+        //     }
+        // }
 
-        stage('Build Docker Image') {
-            steps {
-                echo 'Building Docker image...'
-                sh "docker build -t ${DOCKER_IMAGE}:${params.DOCKER_TAG} ."
-                echo "Docker image built: ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
-            }
-        }
+        // stage('Build Docker Image') {
+        //     steps {
+        //         echo 'Building Docker image...'
+        //         sh "docker build -t ${DOCKER_IMAGE}:${params.DOCKER_TAG} ."
+        //         echo "Docker image built: ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
+        //     }
+        // }
 
-        stage('Clear Container') {
-            steps {
-                script {
-                    def containers = sh(script: "docker ps -q --filter publish=${APP_PORT}", returnStdout: true).trim()
-                    if (containers) {
-                        echo "Stopping and removing containers using port ${APP_PORT}..."
-                        sh "echo ${containers} | xargs docker stop"
-                        sh "echo ${containers} | xargs docker rm"
-                    } else {
-                        echo "No containers are using port ${APP_PORT}."
-                    }
-                }
-            }
-        }
+        // stage('Clear Container') {
+        //     steps {
+        //         script {
+        //             def containers = sh(script: "docker ps -q --filter publish=${APP_PORT}", returnStdout: true).trim()
+        //             if (containers) {
+        //                 echo "Stopping and removing containers using port ${APP_PORT}..."
+        //                 sh "echo ${containers} | xargs docker stop"
+        //                 sh "echo ${containers} | xargs docker rm"
+        //             } else {
+        //                 echo "No containers are using port ${APP_PORT}."
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
                 // ตัวอย่างการนำไปใช้โดยใช้ Docker
                 // sh "docker run -d -p ${APP_PORT}:3000 ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
-                sh "docker-compose up -d"
+                sh "docker-compose up -d --build"
             }
         }
     }
