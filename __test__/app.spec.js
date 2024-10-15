@@ -10,6 +10,8 @@ describe('GET /', () => {
     });
 });
 
+
+
 describe('GET /about', () => {
     it('responds with status 200 and renders the about page', async () => {
         const response = await request(app).get('/about');
