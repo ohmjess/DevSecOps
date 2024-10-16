@@ -6,7 +6,7 @@ describe('GET /', () => {
     it('responds with status 200 and returns the expected message', async () => {
         const response = await request(app).get('/');
         expect(response.status).toBe(200);
-        expect(response.text).toBe("<h1>Hello World, this is my first project for becoming a 'DEVSECOPS' engineer</h1>"); // ปรับให้ตรงกับข้อความที่ตอบกลับ
+        expect(response.text).toBe("<h1>Hello world! This is our first project towards becoming DevSecOps engineers.</h1>"); // ปรับให้ตรงกับข้อความที่ตอบกลับ
     });
 });
 
