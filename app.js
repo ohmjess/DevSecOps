@@ -13,16 +13,22 @@ app.get("/", (req, res) => {
   // Unused variable
   const unusedVar = "This variable is not used anywhere";
   res.status(200).send("Ohmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+
 });
 
 app.get("/about", (req, res) => {
   // Redundant code
-  res.send("about gay");
+  res.send("about page");
   res.send("This line will never execute"); // This line is unreachable
+});
+
+app.get("/helloworld", (req, res) => {
+  res.send("helloworld");
 });
 
 // Function with no purpose
 function uselessFunction() {
+  var text = "This is useless variable";
   // This function does nothing but takes up space
 }
 

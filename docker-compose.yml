@@ -4,10 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3201:3201"
+      - "3201:3000"
     environment:
       NODE_ENV: production
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
     restart: unless-stopped

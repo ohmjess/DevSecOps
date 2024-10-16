@@ -2,10 +2,8 @@ pipeline {
     agent any
 
     environment {
-        SONARQUBE_SERVER = 'SonarQube' 
-        DOCKER_IMAGE = 'bso-express-dev-sec-ops'
         APP_PORT = '3201'
-        APP_NAME = 'ohmgay-app'
+        GIT_URL = 'https://github.com/BSO-Space/DevSecOps'
     }
 
     parameters {
@@ -14,64 +12,72 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout & Pulling') {
             steps {
                 script {
                     cleanWs()
-                    git branch: "${params.BRANCH_NAME}", url: 'https://github.com/boytur/DevSecOps'
-                }
-            }
-        }
-
-        stage('Verify Branch') {
-            steps {
-                script {
+                    git branch: "${params.BRANCH_NAME}", url: "${GIT_URL}"
                     if ("${params.BRANCH_NAME}" != "main") {
                         error("This pipeline only runs on the main branch. Current branch: ${params.BRANCH_NAME}")
                     }
+                    echo 'Pulling the project...'
+                    sh "git pull origin ${params.BRANCH_NAME}"
                 }
             }
         }
 
-        stage('Build') {
+        // stage('Verify Branch') {
+        //     steps {
+        //         script {
+        //             if ("${params.BRANCH_NAME}" != "main") {
+        //                 error("This pipeline only runs on the main branch. Current branch: ${params.BRANCH_NAME}")
+        //             }
+        //         }
+        //     }
+        // }
+
+        // stage('Pulling Project')
+        // {
+        //     steps {
+        //         echo 'Pulling the project...'
+        //         sh "git pull origin ${params.BRANCH_NAME}"
+        //     }
+        // }
+
+        stage('Install Dependencies') {
             steps {
                 echo 'Building the project...'
                 sh 'npm install'
             }
         }
 
-        stage('Test') {
+        stage('Testing with Jest') {
             steps {
                 echo 'Running unit tests...'
                 sh 'npm test'
             }
         }
 
-        stage('Scan') {
+        stage('Code analysis') {
             steps {
-                withCredentials([string(credentialsId: 'jenkin-sonaqube', variable: 'SONAR_TOKEN')]) {
+                withCredentials([string(credentialsId: 'test-sonar', variable: 'SONAR_TOKEN')]) {
                     sh '''
                         npm install sonar-scanner
                         npx sonar-scanner \
                         -Dsonar.projectKey=mywebapp \
-                        -Dsonar.host.url=http://sonarqube:9000 \
+                        -Dsonar.host.url=http://sonarqube-dso-demo:9000 \
                         -Dsonar.login=$SONAR_TOKEN
                     '''
                 }
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Docker Deployment') {
             steps {
-                echo 'Building Docker image...'
-                // Build Docker image ใหม่โดยทับตัวเดิม
-                sh "docker build -t ${DOCKER_IMAGE}:${params.DOCKER_TAG} ."
-                echo "Docker image built: ${DOCKER_IMAGE}:${params.DOCKER_TAG}"
-                sh "docker-compose up -d"
-                echo "docker-compose up ..."
+                echo 'Deploying the application...'
+                sh "docker-compose up -d --build"
             }
         }
-
     }
 
     post {
