@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
   res
     .status(200)
     .send(
-      "<h1>Hello world! This is our first project towards becoming DevSecOps engineers.</h1>"
+      "<h1>Hello world! This is our first project towards becoming DevSecOps engineers.😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎</h1>"
     );
 });
 

@@ -7,7 +7,7 @@ describe("GET /", () => {
     const response = await request(app).get("/");
     expect(response.status).toBe(200);
     expect(response.text).toBe(
-      "<h1>Hello world! This is our first project towards becoming DevSecOps engineers.</h1>"
+      "<h1>Hello world! This is our first project towards becoming DevSecOps engineers.😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎</h1>"
     );
   });
 });
@@ -25,7 +25,7 @@ describe("GET /", () => {
     const response = await request(app).get("/");
     expect(response.status).toBe(200);
     expect(response.text).toBe(
-      "<h1>Hello world! This is our first project towards becoming DevSecOps engineers.</h1>"
+      "<h1>Hello world! This is our first project towards becoming DevSecOps engineers.😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎😎</h1>"
     ); // ปรับให้ตรงกับข้อความที่ตอบกลับ
   });
 });
