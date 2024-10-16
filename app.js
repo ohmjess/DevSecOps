@@ -12,8 +12,11 @@ app.use(express.static("public"));
 app.get("/", (req, res) => {
   // Unused variable
   const unusedVar = "This variable is not used anywhere";
-  res.status(200).send("Ohmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-
+  res
+    .status(200)
+    .send(
+      "<h1>Hello world! This is our first project towards becoming DevSecOps engineers.</h1>"
+    );
 });
 
 app.get("/about", (req, res) => {
