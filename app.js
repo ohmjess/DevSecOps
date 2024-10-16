@@ -21,6 +21,10 @@ app.get("/about", (req, res) => {
   res.send("This line will never execute"); // This line is unreachable
 });
 
+app.get("/helloworld", (req, res) => {
+  res.send("helloworld");
+});
+
 // Function with no purpose
 function uselessFunction() {
   var text = "This is useless variable";
