@@ -12,48 +12,53 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout & Pulling') {
             steps {
                 script {
                     cleanWs()
                     git branch: "${params.BRANCH_NAME}", url: "${GIT_URL}"
-                }
-            }
-        }
-
-        stage('Verify Branch') {
-            steps {
-                script {
                     if ("${params.BRANCH_NAME}" != "main") {
                         error("This pipeline only runs on the main branch. Current branch: ${params.BRANCH_NAME}")
                     }
+                    echo 'Pulling the project...'
+                    sh "git pull origin ${params.BRANCH_NAME}"
                 }
             }
         }
 
-        stage('Pulling Project')
-        {
-            steps {
-                echo 'Pulling the project...'
-                sh "git pull origin ${params.BRANCH_NAME}"
-            }
-        }
+        // stage('Verify Branch') {
+        //     steps {
+        //         script {
+        //             if ("${params.BRANCH_NAME}" != "main") {
+        //                 error("This pipeline only runs on the main branch. Current branch: ${params.BRANCH_NAME}")
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Build') {
+        // stage('Pulling Project')
+        // {
+        //     steps {
+        //         echo 'Pulling the project...'
+        //         sh "git pull origin ${params.BRANCH_NAME}"
+        //     }
+        // }
+
+        stage('Install Dependencies') {
             steps {
                 echo 'Building the project...'
                 sh 'npm install'
             }
         }
 
-        stage('Test') {
+        stage('Testing with Jest') {
             steps {
                 echo 'Running unit tests...'
                 sh 'npm test'
             }
         }
 
-        stage('Scan') {
+        stage('Code analysis') {
             steps {
                 withCredentials([string(credentialsId: 'test-sonar', variable: 'SONAR_TOKEN')]) {
                     sh '''
@@ -67,7 +72,7 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Docker Deployment') {
             steps {
                 echo 'Deploying the application...'
                 sh "docker-compose up -d --build"
